@@ -43,5 +43,10 @@
   "lint-staged": {
     "*.js": "eslint",
     "*.cjs": "eslint"
+  },
+  "dependencies": {
+    "@adobe/fetch": "4.0.1",
+    "cookie": "0.5.0",
+    "dotenv": "16.0.3"
   }
 }
