@@ -18,7 +18,6 @@ $ npm install @adobe/semantic-release-skms-cmr
 
 ## Usage
 
-See the [API documentation](docs/API.md).
 
 ## Development
 
