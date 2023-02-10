@@ -15,6 +15,10 @@ import { CmrDao } from '../../src/CmrDao.js';
 
 config();
 async function run() {
+  if (process.argv.length < 3) {
+    console.log('usage: search-cmr <cmrId>');
+    process.exit(1);
+  }
   const client = new SKMSClient({
     username: process.env.SKMS_USERNAME,
     passkey: process.env.SKMS_PASSKEY,
@@ -22,7 +26,7 @@ async function run() {
     verifySSL: false,
   });
   const dao = new CmrDao(client);
-  const data = await dao.searchCMR(654960);
+  const data = await dao.searchCMR(process.argv[2]);
   console.log(data);
 }
 

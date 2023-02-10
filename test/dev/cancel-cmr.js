@@ -15,6 +15,10 @@ import { CmrDao } from '../../src/CmrDao.js';
 
 config();
 async function run() {
+  if (process.argv.length < 3) {
+    console.log('usage: cancel-cmr <cmrId>');
+    process.exit(1);
+  }
   const client = new SKMSClient({
     username: process.env.SKMS_USERNAME,
     passkey: process.env.SKMS_PASSKEY,
@@ -24,13 +28,13 @@ async function run() {
   const dao = new CmrDao(client);
 
   const data = await dao.cancelCmr({
-    cmrId: 654963,
+    cmrId: process.argv[2],
     cancelationNotes: 'post deployment tests failed.',
   });
   const {
-    cmr_id: cmdId,
+    cmr_id: cmrId,
   } = data;
-  console.log(`Completed CMR: https://${client.apiUrl.host}/sst.cm.cmr/view/?cmr_id=${cmdId}`);
+  console.log(`Completed CMR: ${cmrId}\nhttps://${client.apiUrl.host}/sst.cm.cmr/view/?cmr_id=${cmrId}`);
 }
 
 run().catch(console.error);

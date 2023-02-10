@@ -37,9 +37,9 @@ async function run() {
     additionalNotes: 'https://app.circleci.com/pipelines/github/adobe/helix-pipeline-service/2544',
   });
   const {
-    cmr_id: cmdId,
+    cmr_id: cmrId,
   } = data;
-  console.log(`CMR Created: https://${client.apiUrl.host}/sst.cm.cmr/view/?cmr_id=${cmdId}`);
+  console.log(`CMR Created: ${cmrId}\nhttps://${client.apiUrl.host}/sst.cm.cmr/view/?cmr_id=${cmrId}`);
 }
 
 run().catch(console.error);

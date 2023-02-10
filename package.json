@@ -38,7 +38,8 @@
     "lint-staged": "13.1.1",
     "mocha": "10.2.0",
     "mocha-multi-reporters": "1.5.1",
-    "semantic-release": "20.1.0"
+    "semantic-release": "20.1.0",
+    "dotenv": "16.0.3"
   },
   "lint-staged": {
     "*.js": "eslint",
@@ -46,7 +47,6 @@
   },
   "dependencies": {
     "@adobe/fetch": "4.0.1",
-    "cookie": "0.5.0",
-    "dotenv": "16.0.3"
+    "cookie": "0.5.0"
   }
 }
