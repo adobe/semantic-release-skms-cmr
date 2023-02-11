@@ -120,7 +120,7 @@ export async function replaceParams(string, pluginConfig, ctx) {
   if (!ctx.pkgJson) {
     ctx.pkgJson = JSON.parse(await readFile(resolve(ctx.cwd, 'package.json'), 'utf-8'));
   }
-  return string.replaceAll(/\$\{([^}]+)\}/g, (_, pat) => {
+  return string.replaceAll(/\$\{([^}]+)}/g, (_, pat) => {
     if (pat.startsWith('env.')) {
       return ctx.env[pat.substring(4)];
     }
