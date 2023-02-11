@@ -2,12 +2,12 @@
 
 > Semantic release plugin that integrates with SKMS Change Management System
 
-| Step               | Description                                                                                                                     |
-|--------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| Step               | Description                                                                                                                  |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------|
 | `verifyConditions` | Verify that the `SKMS_USERNAME` and `SKMS_PASSKEY` environment variable has been set and that it is able to access the SKMS API |
-| `prepare`          | Create a pre approved SKMS CMR                                                                                                  |
-| `success`          | Complete the CMR                                                                                                                |
-| `fail`             | Cancel the CMR                                                                                                                  |
+| `prepare`          | Create a pre approved SKMS CMR                                                                                               |
+| `success`          | Complete the CMR                                                                                                             |
+| `fail`             | Cancel the CMR                                                                                                               |
 
 ## Status
 [![codecov](https://img.shields.io/codecov/c/github/adobe/semantic-release-skms-cmr.svg)](https://codecov.io/gh/adobe/semantic-release-skms-cmr)
@@ -33,16 +33,16 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
   plugins: [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
-    // note that the skms plugins needs to be defined before the exec plugin, so that the CMR can
-    // be openened before the `prepare` step in exec is performed.
-    ["@adobe/semantic-release-skms-cmr", {
-      modelId: 1234,
-      summary: "CircleCI release of ${pkg.name} ${nextRelease.name}"
-    }],
     ['@semantic-release/exec', {
       prepareCmd: 'npm run deploy && npm run test-postdeploy',
       publishCmd: 'npm run deploy-routes',
       successCmd: 'echo "${nextRelease.version}" > released.txt',
+    }],
+    // note that the skms plugins needs to be defined after the exec plugin, so that the CMR can
+    // is not opened if the post-deploy steps fail during the prepare step.
+    ["@adobe/semantic-release-skms-cmr", {
+      modelId: 1234,
+      summary: "CircleCI release of ${pkg.name} ${nextRelease.name}"
     }],
   ]
 }
@@ -65,9 +65,9 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
 | `modelId`          | `string` | yes      | ID of the pre approved model to use              |                                                              |
 | `apihost`          | `string` | no       | Optional hostname of the SKMS api to use         | `api.skms.adobe.com`                                         |
 | `summary`          | `string` | no       | Summary of the CMR                               | `Automated CI/CD release of ${pkg.name} ${nextRelease.name}` |
-| `additionalNotes`  | `string` | no       | Additional notes of the CMR                      | `${env.CIRCLE_BUILD_URL}`                                    |
+| `notes`            | `string` | no       | Additional notes of the CMR                      | `${env.CIRCLE_BUILD_URL}`                                    |
 | `explanation`      | `string` | no       | Explanation added to a completed CMR             | `released ${pkg.name}@${nextRelease.version}`                |
-| `cancelationNotes` | `string` | no       | Explanation added to a canceled CMR              | `released failed.`                                           |
+| `cancelationNotes` | `string` | no       | Explanation added to a canceled CMR              | `semantic released failed.`                                  |
 | `maintStart`       | `number` | no       | num seconds before the maintenance window starts | `20`                                                         |
 | `maintDuration`    | `number` | no       | num seconds of the maintenance window            | `600`                                                        |
 
@@ -91,9 +91,3 @@ $ npm test
 ```bash
 $ npm run lint
 ```
-
-
-verifyConditions
-prepare
-success
-fail

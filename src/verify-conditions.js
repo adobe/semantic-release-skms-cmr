@@ -31,7 +31,7 @@ export async function verifyConditions(pluginConfig, { env, logger }) {
   logger.log(`validating change model ${modelId} on ${client.apiUrl}`);
   const data = await dao.canPreApprovedChangeModelBeSubmitted(modelId);
   if (data.can_current_user_submit) {
-    logger.log('CMR model is valid, CMR will be created.');
+    logger.log('CMR model is valid. A CMR will be created.');
     return;
   }
   logger.error('CMR model is not valid:');

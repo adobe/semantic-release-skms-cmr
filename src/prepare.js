@@ -10,14 +10,10 @@
  * governing permissions and limitations under the License.
  */
 import { CmrDao } from './api/CmrDao.js';
-import { getConfig, getSKMSClient } from './utils.js';
-import { SKMSClient } from './api/SKMSClient.js';
-
-// eslint-disable-next-line no-template-curly-in-string
-const DEFAULT_SUMMARY = 'Automated CI/CD release of ${pkg.name}';
-
-// eslint-disable-next-line no-template-curly-in-string
-const DEFAULT_NOTES = '${env.CIRCLE_BUILD_URL}';
+import {
+  DEFAULT_MAINTENANCE_DURATION, DEFAULT_MAINTENANCE_START,
+  DEFAULT_NOTES, DEFAULT_SUMMARY, getConfig, getSKMSClient, PLUGIN_CONTEXT,
+} from './utils.js';
 
 /**
  * Prepare the release by creating a CMR
@@ -30,10 +26,12 @@ export async function prepare(pluginConfig, ctx) {
   const client = getSKMSClient(pluginConfig, ctx);
 
   const startDate = new Date();
-  startDate.setSeconds(startDate.getSeconds() + (pluginConfig.maintStart ?? 20));
+  startDate.setSeconds(startDate.getSeconds()
+    + (pluginConfig.maintStart ?? DEFAULT_MAINTENANCE_START));
 
   const endDate = new Date();
-  endDate.setSeconds(endDate.getSeconds() + (pluginConfig.maintDuration ?? 600));
+  endDate.setSeconds(endDate.getSeconds()
+    + (pluginConfig.maintDuration ?? DEFAULT_MAINTENANCE_DURATION));
 
   logger.log(`creating pre approved CMR with maintenance window from ${startDate.toISOString()} to ${endDate.toISOString()}`);
 
@@ -43,13 +41,15 @@ export async function prepare(pluginConfig, ctx) {
     endDate,
     modelId: pluginConfig.modelId,
     summary: await getConfig('summary', DEFAULT_SUMMARY, pluginConfig, ctx),
-    additionalNotes: await getConfig('additionalNotes', DEFAULT_NOTES, pluginConfig, ctx),
+    additionalNotes: await getConfig('notes', DEFAULT_NOTES, pluginConfig, ctx),
   });
   const {
     cmr_id: cmrId,
   } = data;
-  logger.log(`CMR Created: ${cmrId}\nhttps://${client.apiUrl.host}/sst.cm.cmr/view/?cmr_id=${cmrId}`);
-  // remember cmrId
-  // eslint-disable-next-line no-param-reassign
-  pluginConfig.cmrId = cmrId;
+  logger.log(`CMR Created: ${cmrId}`);
+  logger.log(`https://${client.apiUrl.host}/sst.cm.cmr/view/?cmr_id=${cmrId}`);
+
+  // remember cmrId and maintenance start date
+  PLUGIN_CONTEXT.cmrId = cmrId;
+  PLUGIN_CONTEXT.startDate = startDate;
 }
