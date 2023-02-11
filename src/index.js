@@ -11,4 +11,4 @@
  */
 
 export { verifyConditions } from './verify-conditions.js';
-export { prepare } from './prepare.js';
+export { prepare as verifyRelease } from './prepare.js';

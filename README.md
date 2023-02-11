@@ -68,7 +68,7 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
 | `additionalNotes`  | `string` | no       | Additional notes of the CMR                      | `${env.CIRCLE_BUILD_URL}`                                    |
 | `explanation`      | `string` | no       | Explanation added to a completed CMR             | `released ${pkg.name}@${nextRelease.version}`                |
 | `cancelationNotes` | `string` | no       | Explanation added to a canceled CMR              | `released failed.`                                           |
-| `maintStart`       | `number` | no       | num seconds before the maintenance window starts | `10`                                                         |
+| `maintStart`       | `number` | no       | num seconds before the maintenance window starts | `20`                                                         |
 | `maintDuration`    | `number` | no       | num seconds of the maintenance window            | `600`                                                        |
 
 

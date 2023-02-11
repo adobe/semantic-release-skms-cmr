@@ -11,6 +11,12 @@
  */
 import { SKMSClient } from './SKMSClient.js';
 
+export const COMPLETE_STATUS_COMPLETE_PLAN = 'Completed - According to implementation plan';
+export const COMPLETE_STATUS_COMPLETE_NO_PLAN = 'Completed - Not according to implementation plan';
+export const COMPLETE_STATUS_CANCEL_NA = 'Canceled - Resources not available';
+export const COMPLETE_STATUS_CANCEL_NOT_NEEDED = 'Canceled - Work no longer needed';
+export const COMPLETE_STATUS_CANCEL_BACKOUT = 'Canceled - Had to initiate backout plan';
+
 export class CmrDao {
   constructor(client) {
     this.client = client;
@@ -47,12 +53,15 @@ export class CmrDao {
 
   async completeCmr({
     cmrId,
-    explanation,
+    explanation = '',
+    status = COMPLETE_STATUS_COMPLETE_PLAN,
+    notes = '',
   }) {
     return this.client.sendRequest('CmrDao', 'completeCmr', {
       cmr_id: cmrId,
-      completion_status: 'Completed - According to implementation plan',
+      completion_status: status,
       explanation,
+      notes,
     });
   }
 

@@ -10,38 +10,46 @@
  * governing permissions and limitations under the License.
  */
 import { CmrDao } from './api/CmrDao.js';
-import { getSKMSClient } from './utils.js';
+import { getConfig, getSKMSClient } from './utils.js';
 import { SKMSClient } from './api/SKMSClient.js';
+
+// eslint-disable-next-line no-template-curly-in-string
+const DEFAULT_SUMMARY = 'Automated CI/CD release of ${pkg.name}';
+
+// eslint-disable-next-line no-template-curly-in-string
+const DEFAULT_NOTES = '${env.CIRCLE_BUILD_URL}';
 
 /**
  * Prepare the release by creating a CMR
  * @see https://semantic-release.gitbook.io/semantic-release/developer-guide/plugin#prepare
  * @param {SKMSPluginConfig} pluginConfig
- * @param {SKMSPluginEnv} env
- * @param logger
+ * @param {SemanticReleaseContext} ctx
  */
-export async function prepare(pluginConfig, { env, logger, ...rest }) {
-  const client = getSKMSClient(pluginConfig, { env });
-
-  console.log(pluginConfig, rest);
+export async function prepare(pluginConfig, ctx) {
+  const { logger } = ctx;
+  const client = getSKMSClient(pluginConfig, ctx);
 
   const startDate = new Date();
-  startDate.setSeconds(startDate.getSeconds() + (pluginConfig.maintStart ?? 10));
+  startDate.setSeconds(startDate.getSeconds() + (pluginConfig.maintStart ?? 20));
 
   const endDate = new Date();
-  endDate.getSeconds(endDate.getSeconds() + (pluginConfig.maintDuration ?? 600));
+  endDate.setSeconds(endDate.getSeconds() + (pluginConfig.maintDuration ?? 600));
 
-  logger.log(`creating pre approved CMR with maintenance window from ${SKMSClient.serializeDate(startDate)} to ${SKMSClient.serializeDate(startDate)} ${dry}`);
+  logger.log(`creating pre approved CMR with maintenance window from ${startDate.toISOString()} to ${endDate.toISOString()}`);
 
-  // const data = await dao.createPreApprovedCmr({
-  //   startDate,
-  //   endDate,
-  //   modelId: 654955,
-  //   summary: 'Automated CI/CD release of helix-pipeline',
-  //   additionalNotes: 'https://app.circleci.com/pipelines/github/adobe/helix-pipeline-service/2544',
-  // });
-  // const {
-  //   cmr_id: cmrId,
-  // } = data;
-  // console.log(`CMR Created: ${cmrId}\nhttps://${client.apiUrl.host}/sst.cm.cmr/view/?cmr_id=${cmrId}`);
+  const dao = new CmrDao(client);
+  const data = await dao.createPreApprovedCmr({
+    startDate,
+    endDate,
+    modelId: pluginConfig.modelId,
+    summary: await getConfig('summary', DEFAULT_SUMMARY, pluginConfig, ctx),
+    additionalNotes: await getConfig('additionalNotes', DEFAULT_NOTES, pluginConfig, ctx),
+  });
+  const {
+    cmr_id: cmrId,
+  } = data;
+  logger.log(`CMR Created: ${cmrId}\nhttps://${client.apiUrl.host}/sst.cm.cmr/view/?cmr_id=${cmrId}`);
+  // remember cmrId
+  // eslint-disable-next-line no-param-reassign
+  pluginConfig.cmrId = cmrId;
 }
