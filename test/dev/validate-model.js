@@ -16,7 +16,7 @@ import { CmrDao } from '../../src/api/CmrDao.js';
 config();
 async function run() {
   if (process.argv.length < 3) {
-    console.log('usage: cancel-cmr <cmrId>');
+    console.log('usage: validate-model <modelId>');
     process.exit(1);
   }
   const client = new SKMSClient({
@@ -26,15 +26,8 @@ async function run() {
     verifySSL: false,
   });
   const dao = new CmrDao(client);
-
-  const data = await dao.cancelCmr({
-    cmrId: process.argv[2],
-    cancelationNotes: 'post deployment tests failed.',
-  });
-  const {
-    cmr_id: cmrId,
-  } = data;
-  console.log(`Completed CMR: ${cmrId}\nhttps://${client.apiUrl.host}/sst.cm.cmr/view/?cmr_id=${cmrId}`);
+  const data = await dao.canPreApprovedChangeModelBeSubmitted(process.argv[2]);
+  console.log(data);
 }
 
 run().catch(console.error);

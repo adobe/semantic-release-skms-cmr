@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 import { config } from 'dotenv';
-import { SKMSClient } from '../../src/SKMSClient.js';
-import { CmrDao } from '../../src/CmrDao.js';
+import { SKMSClient } from '../../src/api/SKMSClient.js';
+import { CmrDao } from '../../src/api/CmrDao.js';
 
 config();
 async function run() {

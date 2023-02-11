@@ -1,0 +1,12 @@
+{
+  "name": "test-service",
+  "version": "0.0.1",
+  "description": "Test Service",
+  "type": "module",
+  "scripts": {
+    "semantic-release": "semantic-release --no-ci --dry-run"
+  },
+  "devDependencies": {
+    "@adobe/semantic-release-skms-cmr": "*"
+  }
+}

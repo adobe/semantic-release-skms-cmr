@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 import { config } from 'dotenv';
-import { SKMSClient } from '../../src/SKMSClient.js';
-import { CmrDao } from '../../src/CmrDao.js';
+import { SKMSClient } from '../../src/api/SKMSClient.js';
+import { CmrDao } from '../../src/api/CmrDao.js';
 
 config();
 async function run() {
@@ -29,11 +29,11 @@ async function run() {
   const endDate = new Date();
   endDate.setMinutes(endDate.getMinutes() + 5);
 
-  const data = await dao.createPreApprovecCmr({
+  const data = await dao.createPreApprovedCmr({
     startDate,
     endDate,
     modelId: 654955,
-    summary: 'CI/CD release of helix-pipeline',
+    summary: 'Automated CI/CD release of helix-pipeline',
     additionalNotes: 'https://app.circleci.com/pipelines/github/adobe/helix-pipeline-service/2544',
   });
   const {

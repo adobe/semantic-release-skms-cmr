@@ -55,7 +55,7 @@ export class SKMSClient {
       passkey,
       skmsHost = PROD_API_HOST,
       debug = false,
-      verifySSL = true,
+      verifySSL,
       requestTimeout = 25000,
     } = options;
     this.username = username;
@@ -64,6 +64,9 @@ export class SKMSClient {
     this.sessionCookieName = skmsHost === PROD_API_HOST ? 'SkmsSID' : 'dev_SkmsSID';
     this.debug = debug;
     this.verifySSL = verifySSL;
+    if (this.verifySSL === undefined) {
+      this.verifySSL = skmsHost === PROD_API_HOST;
+    }
     this.requestTimeout = requestTimeout;
   }
 

@@ -22,7 +22,13 @@ export class CmrDao {
     });
   }
 
-  async createPreApprovecCmr({
+  async canPreApprovedChangeModelBeSubmitted(modelId) {
+    return this.client.sendRequest('CmrDao', 'canPreApprovedChangeModelBeSubmitted', {
+      cmr_key: modelId,
+    });
+  }
+
+  async createPreApprovedCmr({
     startDate,
     endDate,
     modelId,
