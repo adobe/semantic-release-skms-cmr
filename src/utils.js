@@ -14,7 +14,7 @@ import { resolve } from 'node:path';
 import { SKMSClient } from './api/SKMSClient.js';
 
 // eslint-disable-next-line no-template-curly-in-string
-export const DEFAULT_SUMMARY = 'Automated CI/CD release of ${pkg.name}';
+export const DEFAULT_SUMMARY = 'Automated CI/CD release of ${pkg.name} ${nextRelease.name}';
 
 // eslint-disable-next-line no-template-curly-in-string
 export const DEFAULT_NOTES = '${env.CIRCLE_BUILD_URL}';

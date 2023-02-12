@@ -21,6 +21,10 @@ import { clearContext, PLUGIN_CONTEXT } from '../src/utils.js';
 
 const DEFAULT_CONTEXT = (env = {}) => ({
   cwd: resolve(__testdir, 'dev', 'example'),
+  nextRelease: {
+    name: 'v1.2.3',
+    version: '1.2.3',
+  },
   env: {
     ...env,
   },
@@ -44,7 +48,7 @@ describe('prepare tests', () => {
       .reply((_, body) => {
         const payload = JSON.parse(new URLSearchParams(body).get('_parameters'));
         assert.strictEqual(payload.preapproved_change_model_id, 123);
-        assert.strictEqual(payload.summary, 'Automated CI/CD release of test-service');
+        assert.strictEqual(payload.summary, 'Automated CI/CD release of test-service v1.2.3');
         assert.strictEqual(payload.additional_notes, 'https://circleci.com/foo/bar');
         return [200, {
           data: {
