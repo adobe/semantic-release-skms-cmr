@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+/* eslint-disable no-console */
 import { config } from 'dotenv';
 import { SKMSClient } from '../../src/api/SKMSClient.js';
 import { CmrDao, COMPLETE_STATUS_CANCEL_NA } from '../../src/api/CmrDao.js';

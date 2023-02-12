@@ -10,15 +10,19 @@
  * governing permissions and limitations under the License.
  */
 /* eslint-disable no-underscore-dangle */
-import os from 'os';
-import fs from 'fs/promises';
+import os from 'node:os';
+import fs from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import { h1NoCache, timeoutSignal } from '@adobe/fetch';
 import { parse } from 'cookie';
 import { StatusError } from './StatusError.js';
 import { SKMSResponseError } from './SKMSResponseError.js';
 
-const CLIENT_TYPE = 'node.https';
-const CLIENT_VERSION = '1.0';
+const require = createRequire(import.meta.url);
+const pkgJson = require('../../package.json');
+
+const CLIENT_TYPE = pkgJson.name;
+const CLIENT_VERSION = pkgJson.version;
 
 const PROD_API_HOST = 'api.skms.adobe.com';
 
@@ -80,10 +84,10 @@ export class SKMSClient {
     try {
       const data = JSON.parse(await fs.readFile(sessionStorageFile, 'utf-8'));
       if (data.skms_session_id) {
-        this.setSkmsSessionId(data.skms_session_id);
+        this.sessionId = data.skms_session_id;
       }
       if (data.skms_csrf_token) {
-        this.setSkmsCsrfToken(data.skms_csrf_token);
+        this.csrfToken = data.skms_csrf_token;
       }
     } catch (e) {
       // ignore
@@ -152,7 +156,7 @@ export class SKMSClient {
       });
 
       if (!res.ok) {
-        throw new StatusError(`Error invoking api ${this.apiUrl}: ${await res.text()}`, res.status);
+        throw new StatusError(`Error invoking api ${this.apiUrl}: ${res.status} ${await res.text()}`, res.status);
       }
 
       const cookies = parse(res.headers.get('set-cookie') || '');
