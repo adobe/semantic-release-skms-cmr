@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/adobe/semantic-release-skms-cmr/compare/v1.0.7...v1.0.8) (2023-05-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/fetch to v4.0.12 ([#29](https://github.com/adobe/semantic-release-skms-cmr/issues/29)) ([056e251](https://github.com/adobe/semantic-release-skms-cmr/commit/056e251a76f288848e42afa6330f6a3dbbffeb9d))
+
 ## [1.0.7](https://github.com/adobe/semantic-release-skms-cmr/compare/v1.0.6...v1.0.7) (2023-04-16)
 
 
