@@ -47,7 +47,7 @@
     "*.cjs": "eslint"
   },
   "dependencies": {
-    "@adobe/fetch": "4.0.10",
+    "@adobe/fetch": "4.0.12",
     "cookie": "0.5.0"
   }
 }
