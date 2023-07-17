@@ -30,6 +30,11 @@ export async function success(pluginConfig, ctx) {
   // this is set during the prepare step
   const { cmrId, startDate } = PLUGIN_CONTEXT;
 
+  if (!cmrId) {
+    logger.log('No CMR was created during prepare. Nothing to do.');
+    return;
+  }
+
   // if the maintenance window has not started, wait
   const waitTime = startDate.getTime() - Date.now();
   if (waitTime > 0) {
