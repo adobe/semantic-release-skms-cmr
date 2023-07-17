@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/adobe/semantic-release-skms-cmr/compare/v1.0.9...v1.0.10) (2023-07-17)
+
+
+### Bug Fixes
+
+* ignore success when no cmr was created during prepare ([#41](https://github.com/adobe/semantic-release-skms-cmr/issues/41)) ([0fae630](https://github.com/adobe/semantic-release-skms-cmr/commit/0fae63034a3f846505f994b5ab75f6027d52b3bf))
+
 ## [1.0.9](https://github.com/adobe/semantic-release-skms-cmr/compare/v1.0.8...v1.0.9) (2023-05-18)
 
 
