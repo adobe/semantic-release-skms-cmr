@@ -69,6 +69,16 @@ describe('success tests', () => {
     assert.strictEqual(PLUGIN_CONTEXT.cmrId, 1234);
   });
 
+  it('ignores success when no cmr was created', async () => {
+    await success({
+      modelId: 123,
+    }, DEFAULT_CONTEXT({
+      CIRCLE_BUILD_URL: 'https://circleci.com/foo/bar',
+      SKMS_USERNAME: 'test-user',
+      SKMS_PASSKEY: 'test-key',
+    }));
+  });
+
   it('completes a cmr after waiting for maintenance window', async () => {
     nock('https://api.skms.adobe.com')
       .post('/web_api/')
