@@ -1,3 +1,10 @@
+## [1.0.14](https://github.com/adobe/semantic-release-skms-cmr/compare/v1.0.13...v1.0.14) (2023-11-13)
+
+
+### Bug Fixes
+
+* **deps:** update external fixes ([#63](https://github.com/adobe/semantic-release-skms-cmr/issues/63)) ([0db4d26](https://github.com/adobe/semantic-release-skms-cmr/commit/0db4d2657e738ba8b1f7c599d5e23875736e5c0c))
+
 ## [1.0.13](https://github.com/adobe/semantic-release-skms-cmr/compare/v1.0.12...v1.0.13) (2023-10-30)
 
 
