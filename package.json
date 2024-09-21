@@ -1,6 +1,6 @@
 {
   "name": "@adobe/semantic-release-skms-cmr",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Semantic Release SKMS CMR",
   "main": "src/index.js",
   "type": "module",
