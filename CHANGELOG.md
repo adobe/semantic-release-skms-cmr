@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/adobe/semantic-release-skms-cmr/compare/v1.1.4...v1.1.5) (2024-10-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency cookie to v0.7.2 ([6b217f2](https://github.com/adobe/semantic-release-skms-cmr/commit/6b217f20faf376a50f01f6861aa99fdb8a69099a))
+
 ## [1.1.4](https://github.com/adobe/semantic-release-skms-cmr/compare/v1.1.3...v1.1.4) (2024-10-05)
 
 
