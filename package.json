@@ -49,6 +49,6 @@
   },
   "dependencies": {
     "@adobe/fetch": "4.1.9",
-    "cookie": "0.7.2"
+    "cookie": "1.0.1"
   }
 }
